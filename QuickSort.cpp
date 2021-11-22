@@ -1,5 +1,7 @@
 #include <iostream>
+#include <chrono>
 using namespace std;
+using namespace std::chrono;
 
 void swap(int *a, int *b)
 {
@@ -45,10 +47,15 @@ void printArray(int arr[], int size)
 
 int main()
 {
+    auto start = high_resolution_clock::now();
     int arr[] = {11, 7, 4, 2, 1, 6};
     int n = sizeof(arr) / sizeof(arr[0]);
     quickSort(arr, 0, n - 1);
     cout << "Sorted Array : " << endl;
     printArray(arr, n);
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(stop - start);
+    cout << "\nTime taken by function: "
+         << duration.count() << "\tMicrosecond" << endl;
     return 0;
 }
