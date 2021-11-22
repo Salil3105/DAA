@@ -1,59 +1,50 @@
 #include <iostream>
-#define nV 4
-#define INF 999
-#include <chrono>
-using namespace std::chrono;
+#include <time.h>
 using namespace std;
-
-void printM(int matrix[][nV]);
-void FW(int graph[][nV])
+void floyds(int b[][7])
 {
-    int matrix[nV][nV], i, j, k;
-    for (i = 0; i < nV; i++)
+    int i, j, k;
+    for (k = 0; k < 7; k++)
     {
-        for (j = 0; j < nV; j++)
+        for (i = 0; i < 7; i++)
         {
-            matrix[i][j] = graph[i][j];
-        }
-    }
-    for (k = 0; k < nV; k++)
-    {
-        for (i = 0; i < nV; i++)
-        {
-            for (j = 0; j < nV; j++)
+            for (j = 0; j < 7; j++)
             {
-                if (matrix[i][k] + matrix[k][j] < matrix[i][j])
-                    matrix[i][j] = matrix[i][k] + matrix[k][j];
+                if ((b[i][k] * b[k][j] != 0) && (i != j))
+                {
+                    if ((b[i][k] + b[k][j] < b[i][j]) || (b[i][j] == 0))
+                    {
+                        b[i][j] = b[i][k] + b[k][j];
+                    }
+                }
             }
         }
     }
-    printM(matrix);
-}
-void printM(int matrix[][nV])
-{
-    for (int i = 0; i < nV; i++)
+    for (i = 0; i < 7; i++)
     {
-        for (int j = 0; j < nV; j++)
+        cout << "\nMinimum Cost With Respect to Node:" << i << endl;
+        for (j = 0; j < 7; j++)
         {
-            if (matrix[i][j] == INF)
-                printf("%4s", "INF");
-            else
-                printf("%4d", matrix[i][j]);
+            cout << b[i][j] << "\t";
         }
-        printf("\n");
     }
 }
+
 int main()
 {
-    auto start = high_resolution_clock::now();
-    int graph[nV][nV] = {{0, 2, INF, 8},
-                         {INF, 0, 5, INF},
-                         {INF, INF, 0, 3},
-                         {INF, INF, INF, 0}};
-    FW(graph);
-    auto stop = high_resolution_clock::now();
-    auto duration = duration_cast<microseconds>(stop - start);
-    cout << "\nTime taken by function: "
-         << duration.count() << "\tMicrosecond" << endl;
+    clock_t tStart = clock();
+    int b[7][7];
+    cout << "ENTER VALUES OF ADJACENCY MATRIX\n\n";
+    for (int i = 0; i < 7; i++)
+    {
+        cout << "enter values for " << (i + 1) << " row" << endl;
+        for (int j = 0; j < 7; j++)
+        {
+            cin >> b[i][j];
+        }
+    }
+    floyds(b);
+
+    printf("\nTime taken: %.9fs\n", (double)(clock() - tStart) / CLOCKS_PER_SEC);
     return 0;
 }
