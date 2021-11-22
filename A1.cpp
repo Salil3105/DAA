@@ -1,7 +1,6 @@
-#include <iostream>
-#include <chrono>
+#include <bits/stdc++.h>
+#include <time.h>
 using namespace std;
-using namespace std::chrono;
 
 void swap(int *a, int *b)
 {
@@ -14,8 +13,10 @@ int partition(int arr[], int low, int high)
 {
     int pivot = arr[high];
     int i = (low - 1);
+
     for (int j = low; j <= high - 1; j++)
     {
+
         if (arr[j] < pivot)
         {
             i++;
@@ -25,12 +26,12 @@ int partition(int arr[], int low, int high)
     swap(&arr[i + 1], &arr[high]);
     return (i + 1);
 }
-
 void quickSort(int arr[], int low, int high)
 {
     if (low < high)
     {
         int pi = partition(arr, low, high);
+
         quickSort(arr, low, pi - 1);
         quickSort(arr, pi + 1, high);
     }
@@ -38,24 +39,29 @@ void quickSort(int arr[], int low, int high)
 
 void printArray(int arr[], int size)
 {
-    for (int i = 0; i < size; i++)
-    {
+    int i;
+    for (i = 0; i < size; i++)
         cout << arr[i] << " ";
-    }
     cout << endl;
 }
 
 int main()
 {
-    auto start = high_resolution_clock::now();
-    int arr[] = {11, 7, 4, 2, 1, 6};
-    int n = sizeof(arr) / sizeof(arr[0]);
+    clock_t tStart = clock();
+    int i, len;
+    cout << "Enter the Array length: ";
+    cin >> len;
+    int arr[len];
+    cout << "\n";
+    cout << "Enter the Number for array :";
+    for (i = 0; i < len; i++)
+    {
+        cin >> arr[i];
+    }
+    int n = len;
     quickSort(arr, 0, n - 1);
-    cout << "Sorted Array : " << endl;
+    cout << "Sorted array: \n";
     printArray(arr, n);
-    auto stop = high_resolution_clock::now();
-    auto duration = duration_cast<microseconds>(stop - start);
-    cout << "\nTime taken by function: "
-         << duration.count() << "\tMicrosecond" << endl;
+    printf("\nTime taken: %.9fs\n", (double)(clock() - tStart) / CLOCKS_PER_SEC);
     return 0;
 }
