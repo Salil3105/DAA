@@ -37,7 +37,7 @@ int main()
     cout << "ENTER VALUES OF ADJACENCY MATRIX\n\n";
     for (int i = 0; i < 7; i++)
     {
-        cout << "enter values for " << (i + 1) << " row" << endl;
+        cout << "Enter values for " << (i + 1) << " row" << endl;
         for (int j = 0; j < 7; j++)
         {
             cin >> b[i][j];
