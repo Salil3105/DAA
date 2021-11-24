@@ -1,69 +1,81 @@
+/*3 - Find Maximum and Minimum elements from an array of integers using Divide and
+Conquer Approach.*/
+
 #include <iostream>
-#include <time.h>
+#include <climits>
+#include <chrono>
+
 using namespace std;
-
-struct Pair
+using namespace std::chrono;
+void MinMax(int arr[], int low, int high, int &min, int &max)
 {
-    int min;
-    int max;
-};
-
-struct Pair getMinMax(int arr[], int n)
-{
-    struct Pair minmax;
-    int i;
-
-    if (n == 1)
+    if (low == high)
     {
-        minmax.max = arr[0];
-        minmax.min = arr[0];
-        return minmax;
+        if (max < arr[low])
+        {
+            max = arr[low];
+        }
+        if (min > arr[high])
+        {
+            min = arr[high];
+        }
+        return;
+    }
+    if (high - low == 1)
+    {
+        if (arr[low] < arr[high])
+        {
+            if (min > arr[low])
+            {
+                min = arr[low];
+            }
+            if (max < arr[high])
+            {
+                max = arr[high];
+            }
+        }
+        else
+        {
+            if (min > arr[high])
+            {
+                min = arr[high];
+            }
+            if (max < arr[low])
+            {
+                max = arr[low];
+            }
+        }
+        return;
     }
 
-    if (arr[0] > arr[1])
-    {
-        minmax.max = arr[0];
-        minmax.min = arr[1];
-    }
-    else
-    {
-        minmax.max = arr[1];
-        minmax.min = arr[0];
-    }
-
-    for (i = 2; i < n; i++)
-    {
-        if (arr[i] > minmax.max)
-            minmax.max = arr[i];
-
-        else if (arr[i] < minmax.min)
-            minmax.min = arr[i];
-    }
-    return minmax;
+    int mid = (low + high) / 2;
+    MinMax(arr, low, mid, min, max);
+    MinMax(arr, mid + 1, high, min, max);
 }
 
 int main()
 {
-    clock_t tStart = clock();
-    int i, len;
-    cout << "Enter the Array length: ";
-    cin >> len;
-    int arr[len];
-    cout << "\n";
-    cout << "Enter the Number for array :";
-    for (i = 0; i < len; i++)
+    // int arr[]={67,5,84,8,33,12,40};
+    cout << "Enter the size of an array: ";
+    int size;
+    cin >> size;
+    int arr[size];
+    for (int i = 0; i < size; i++)
     {
         cin >> arr[i];
     }
-    int arr_size = len;
+    auto start = high_resolution_clock::now();
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int max = INT_MIN, min = INT_MAX;
 
-    struct Pair minmax = getMinMax(arr, arr_size);
+    MinMax(arr, 0, n - 1, min, max);
 
-    cout << "Minimum element is "
-         << minmax.min << endl;
-    cout << "Maximum element is "
-         << minmax.max;
+    cout << "The minimum array element is " << min << endl;
+    cout << "The maximum array element is " << max;
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(stop - start);
 
-    printf("\nTime taken: %.9fs\n", (double)(clock() - tStart) / CLOCKS_PER_SEC);
+    cout << "\nTime taken by function: "
+         << duration.count() << " microseconds" << endl;
     return 0;
 }
