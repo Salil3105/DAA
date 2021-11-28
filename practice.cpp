@@ -1,50 +1,31 @@
 #include <iostream>
-#include <time.h>
 using namespace std;
-void floyds(int b[][7])
+
+int partition(int arr[], int low, int high)
 {
-    int i, j, k;
-    for (k = 0; k < 7; k++)
+}
+
+int QuickSort(int arr[], int low, int high)
+{
+    if (low < high)
     {
-        for (i = 0; i < 7; i++)
-        {
-            for (j = 0; j < 7; j++)
-            {
-                if ((b[i][k] * b[k][j] != 0) && (i != j))
-                {
-                    if ((b[i][k] + b[k][j] < b[i][j]) || (b[i][j] == 0))
-                    {
-                        b[i][j] = b[i][k] + b[k][j];
-                    }
-                }
-            }
-        }
-    }
-    for (i = 0; i < 7; i++)
-    {
-        cout << "\nMinimum Cost With Respect to Node:" << i << endl;
-        for (j = 0; j < 7; j++)
-        {
-            cout << b[i][j] << "\t";
-        }
+        int pivot = partition(arr, low, high);
+        QuickSort(arr, low, pivot - 1);
+        QuickSort(arr, pivot + 1, high);
     }
 }
 
 int main()
 {
-    clock_t tStart = clock();
-    int b[7][7];
-    cout << "ENTER VALUES OF ADJACENCY MATRIX\n\n";
-    for (int i = 0; i < 7; i++)
+    int len;
+    cout << "Enter the length of the array ?" << endl;
+    cin >> len;
+    int n = len;
+    int arr[len];
+    for (int i = 0; i < len; i++)
     {
-        cout << "enter values for " << (i + 1) << " row" << endl;
-        for (int j = 0; j < 7; j++)
-        {
-            cin >> b[i][j];
-        }
+        cin >> arr[i];
     }
-    floyds(b);
-    //getch();
-    printf("\nTime taken: %.9fs\n", (double)(clock() - tStart) / CLOCKS_PER_SEC);
+    QuickSort(arr, 0, (n - 1));
     return 0;
 }

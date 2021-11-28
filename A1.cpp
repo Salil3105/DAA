@@ -13,7 +13,7 @@ int partition(int arr[], int low, int high)
 {
     int pivot = arr[high];
     int i = (low - 1);
-
+    cout << i << endl;
     for (int j = low; j <= high - 1; j++)
     {
 
@@ -26,6 +26,7 @@ int partition(int arr[], int low, int high)
     swap(&arr[i + 1], &arr[high]);
     return (i + 1);
 }
+
 void quickSort(int arr[], int low, int high)
 {
     if (low < high)
