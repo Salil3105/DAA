@@ -5,6 +5,7 @@
 #include <chrono>
 using namespace std;
 using namespace std::chrono;
+
 int main()
 {
     int a[2][2], b[2][2], c[2][2];
@@ -28,7 +29,7 @@ int main()
         }
     }
 
-    cout << "\nMatrix 1\n";
+    cout << "\nMatrix 1 -->\n";
     for (i = 0; i < 2; i++)
     {
         for (j = 0; j < 2; j++)
@@ -38,7 +39,7 @@ int main()
         cout << "\n";
     }
 
-    cout << "\nMatrix 2\n";
+    cout << "\nMatrix 2 --> \n";
     for (i = 0; i < 2; i++)
     {
         for (j = 0; j < 2; j++)
